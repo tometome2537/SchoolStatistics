@@ -81,7 +81,7 @@ tbody th { font-weight: 500; }
 .school-list li strong { font-weight: 500; }
 .school-list li span { flex: 0 0 auto; color: var(--muted); font-size: 0.74rem; }
 .school-list li > div { display: grid; gap: 3px; }
-.school-list li .successor { color: var(--teal); }
+.school-list li .successor { color: var(--coral); }
 .empty-list { color: var(--muted); font-size: 0.82rem; }
 
 footer { margin-top: 28px; color: var(--muted); font-size: 0.72rem; }
