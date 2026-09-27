@@ -16,6 +16,7 @@ type YearlyChange = {
 	openedSchools: OutputJson[];
 	closedSchools: OutputJson[];
 	netChange: number;
+	yearOverYearPercent: number | null;
 	active: number;
 };
 
@@ -40,12 +41,22 @@ function getYearlyChanges(
 				school.idStartYear <= year &&
 				(school.idEndYear === null || school.idEndYear > year),
 		).length;
+		const previousActive = selectedSchools.filter(
+			(school) =>
+				school.idStartYear < year &&
+				(school.idEndYear === null || school.idEndYear >= year),
+		).length;
+		const netChange = openedSchools.length - closedSchools.length;
 
 		return {
 			year,
 			openedSchools,
 			closedSchools,
-			netChange: openedSchools.length - closedSchools.length,
+			netChange,
+			yearOverYearPercent:
+				year === START_YEAR || previousActive === 0
+					? null
+					: (netChange / previousActive) * 100,
 			active,
 		};
 	});
@@ -106,6 +117,7 @@ export default async function Home({
 								<th scope="col">新設</th>
 								<th scope="col">廃校</th>
 								<th scope="col">純増減</th>
+								<th scope="col">前年比</th>
 								<th scope="col">学校数</th>
 							</tr>
 						</thead>
@@ -123,18 +135,48 @@ export default async function Home({
 											<td className="not-applicable">-</td>
 											<td className="not-applicable">-</td>
 											<td className="not-applicable">-</td>
+											<td className="not-applicable">-</td>
 										</>
 									) : (
 										<>
 											<td className="opened">+{change.openedSchools.length}</td>
-											<td className="closed">-{change.closedSchools.length}</td>
 											<td
 												className={
-													change.netChange >= 0 ? "positive" : "negative"
+													change.year === END_YEAR ? "not-applicable" : "closed"
 												}
 											>
-												{change.netChange >= 0 ? "+" : ""}
-												{change.netChange}
+												{change.year === END_YEAR
+													? "計測中"
+													: `-${change.closedSchools.length}`}
+											</td>
+											<td
+												className={
+													change.year === END_YEAR
+														? "not-applicable"
+														: change.netChange >= 0
+															? "positive"
+															: "negative"
+												}
+											>
+												{change.year === END_YEAR
+													? "計測中"
+													: `${change.netChange >= 0 ? "+" : ""}${change.netChange}`}
+											</td>
+											<td
+												className={
+													change.year === END_YEAR ||
+													change.yearOverYearPercent === null
+														? "not-applicable"
+														: change.yearOverYearPercent >= 0
+															? "positive"
+															: "negative"
+												}
+											>
+												{change.year === END_YEAR
+													? "計測中"
+													: change.yearOverYearPercent === null
+														? "-"
+														: `${change.yearOverYearPercent >= 0 ? "+" : ""}${change.yearOverYearPercent.toFixed(1)}%`}
 											</td>
 										</>
 									)}
