@@ -41,6 +41,10 @@ h1 { margin-bottom: 14px; font-size: clamp(2rem, 5vw, 3.8rem); letter-spacing: 0
 h2, h3 { margin-bottom: 0; }
 .intro { margin-bottom: 0; color: var(--muted); font-size: 1rem; }
 
+.school-type-nav { display: flex; gap: 24px; margin: 24px 0 44px; border-bottom: 1px solid var(--line); }
+.school-type-nav a { padding: 0 0 11px; border-bottom: 3px solid transparent; color: var(--muted); font-size: 0.9rem; text-decoration: none; }
+.school-type-nav a[aria-current="page"] { border-color: var(--teal); color: var(--ink); font-weight: 600; }
+
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
 .section-heading .eyebrow { margin-bottom: 7px; }
 h2, h3 { font-size: 1.7rem; }
@@ -84,6 +88,8 @@ footer { margin-top: 28px; color: var(--muted); font-size: 0.72rem; }
 
 @media (max-width: 700px) {
 	.page-shell { padding: 40px 18px 28px; }
+	.school-type-nav { gap: 18px; margin: 20px 0 36px; }
+	.school-type-nav a { font-size: 0.82rem; }
 	.section-heading { display: block; }
 	.note { margin-top: 12px; }
 	th, td { padding: 16px 14px; }

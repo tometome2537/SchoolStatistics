@@ -3,6 +3,13 @@ import type { OutputJson } from "@/types/OutputJson";
 
 const START_YEAR = 2020;
 const END_YEAR = 2026;
+const SCHOOL_TYPES = [
+	"小学校",
+	"中学校",
+	"義務教育学校",
+	"特別支援学校",
+] as const;
+type SupportedSchoolType = (typeof SCHOOL_TYPES)[number];
 
 type YearlyChange = {
 	year: number;
@@ -12,20 +19,23 @@ type YearlyChange = {
 	active: number;
 };
 
-function getYearlyChanges(schools: OutputJson[]): YearlyChange[] {
-	const specialNeedsSchools = schools.filter(
-		(school) => school.institutionCategory === "特別支援学校",
+function getYearlyChanges(
+	schools: OutputJson[],
+	schoolType: SupportedSchoolType,
+): YearlyChange[] {
+	const selectedSchools = schools.filter(
+		(school) => school.institutionCategory === schoolType,
 	);
 
 	return Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, index) => {
 		const year = START_YEAR + index;
-		const openedSchools = specialNeedsSchools.filter(
+		const openedSchools = selectedSchools.filter(
 			(school) => school.idStartYear === year,
 		);
-		const closedSchools = specialNeedsSchools.filter(
+		const closedSchools = selectedSchools.filter(
 			(school) => school.idEndYear === year,
 		);
-		const active = specialNeedsSchools.filter(
+		const active = selectedSchools.filter(
 			(school) =>
 				school.idStartYear <= year &&
 				(school.idEndYear === null || school.idEndYear > year),
@@ -41,9 +51,16 @@ function getYearlyChanges(schools: OutputJson[]): YearlyChange[] {
 	});
 }
 
-export default function Home() {
+export default async function Home({
+	searchParams,
+}: {
+	searchParams: Promise<{ schoolType?: string }>;
+}) {
+	const requestedType = (await searchParams).schoolType;
+	const schoolType =
+		SCHOOL_TYPES.find((type) => type === requestedType) ?? "小学校";
 	const schools = output2026Json as OutputJson[];
-	const yearlyChanges = getYearlyChanges(schools);
+	const yearlyChanges = getYearlyChanges(schools, schoolType);
 	const schoolById = new Map(schools.map((school) => [school.id, school]));
 	const predecessorsById = new Map<string, OutputJson[]>();
 	for (const school of schools) {
@@ -56,8 +73,24 @@ export default function Home() {
 	return (
 		<main className="page-shell">
 			<header className="hero">
-				<h2>特別支援学校の増減</h2>
+				<h2>{schoolType}の増減</h2>
 			</header>
+			<nav className="school-type-nav" aria-label="学校種別">
+				{SCHOOL_TYPES.map((type) => (
+					<a
+						aria-current={schoolType === type ? "page" : undefined}
+						href={`/?schoolType=${encodeURIComponent(type)}`}
+						key={type}
+					>
+						{type}
+					</a>
+				))}
+			</nav>
+			{schoolType === "義務教育学校" && (
+				<p className="note">
+					義務教育学校とは、小学校と中学校の課程を一体化し、前期課程（1〜6年）・後期課程（7〜9年）の9年間を通して義務教育を行う学校です。
+				</p>
+			)}
 
 			<section className="trend-section" aria-labelledby="trend-heading">
 				<div className="section-heading">

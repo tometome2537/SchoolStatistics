@@ -105,7 +105,8 @@ async function importSchoolCode(targetYear: number, fileNames: string[]) {
 								Number(removeParenthesizedValue(data.本分校)),
 							),
 							移行後の学校コード: data.移行後の学校コード
-								? schoolCodeAnalysis(data.移行後の学校コード.slice(0, 13)).schoolCode
+								? schoolCodeAnalysis(data.移行後の学校コード.slice(0, 13))
+										.schoolCode
 								: null,
 						});
 					})
@@ -115,7 +116,15 @@ async function importSchoolCode(targetYear: number, fileNames: string[]) {
 		);
 
 		for (const item of schoolCodeCsvObj) {
-			if (item.学校種 !== "特別支援学校") continue;
+			if (
+				!(
+					item.学校種 === "特別支援学校" ||
+					item.学校種 === "小学校" ||
+					item.学校種 === "中学校" ||
+					item.学校種 === "義務教育学校"
+				)
+			)
+				continue;
 
 			const SpecialNeedsSchool: OutputJson = {
 				id: item.学校コード,
@@ -125,8 +134,8 @@ async function importSchoolCode(targetYear: number, fileNames: string[]) {
 				institutionCategory: item.学校種,
 				prefecture: item.都道府県番号,
 				name: item.学校名, // .normalize("NFKC"), // 全角英数字を半角にする。
-				address: item.学校所在地,
-				isRecruitmentStopped: Boolean(item.属性情報廃止年月日),
+				// address: item.学校所在地,
+				// isRecruitmentStopped: Boolean(item.属性情報廃止年月日),
 				institutionOwnership: item.設置区分,
 				nextId: item.移行後の学校コード,
 			};

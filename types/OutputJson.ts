@@ -11,8 +11,8 @@ export type OutputJson = {
 	institutionCategory: SchoolTypeJa;
 	prefecture: PrefecturesJaShort;
 	name: string;
-	address: string;
-	isRecruitmentStopped: boolean;
+	// address: string;
+	// isRecruitmentStopped: boolean;
 	institutionOwnership: InstitutionOwnershipJa;
 	nextId: string | null;
 };

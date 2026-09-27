@@ -3,8 +3,8 @@ import "./globals.css";
 import type React from "react";
 
 export const metadata: Metadata = {
-	title: "特別支援学校の増減",
-	description: "特別支援学校の新設・廃校の推移",
+	title: "学校の増減",
+	description: "小学校・中学校・義務教育学校・特別支援学校の新設・廃校の推移",
 	icons: {
 		icon: "/favicon.ico",
 	},
