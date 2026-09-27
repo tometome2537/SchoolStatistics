@@ -1,0 +1,93 @@
+:root {
+	--ink: #202b2d;
+	--muted: #718083;
+	--line: #d9e2df;
+	--paper: #f5f7f3;
+	--white: #ffffff;
+	--teal: #147d72;
+	--teal-soft: #dceee9;
+	--coral: #c85e4f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+}
+
+.page-shell {
+	max-width: 1080px;
+	margin: 0 auto;
+	padding: 72px 32px 36px;
+}
+
+.hero {
+	border-left: 5px solid var(--teal);
+	padding: 4px 0 6px 25px;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+	margin: 0 0 14px;
+	color: var(--teal);
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 14px; font-size: clamp(2rem, 5vw, 3.8rem); letter-spacing: 0.02em; line-height: 1.15; }
+h2, h3 { margin-bottom: 0; }
+.intro { margin-bottom: 0; color: var(--muted); font-size: 1rem; }
+
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 18px; }
+.section-heading .eyebrow { margin-bottom: 7px; }
+h2, h3 { font-size: 1.7rem; }
+.note { margin-bottom: 3px; color: var(--muted); font-size: 0.78rem; }
+
+.table-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--line); border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; min-width: 620px; }
+th, td { padding: 19px 24px; border-bottom: 1px solid var(--line); text-align: right; }
+thead th { color: var(--muted); font-size: 0.75rem; font-weight: 500; }
+thead th:first-child, tbody th { text-align: left; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+tbody th { font-weight: 500; }
+.baseline-label { display: inline-block; margin-left: 9px; padding: 2px 7px; border-radius: 2px; background: var(--teal-soft); color: var(--teal); font-size: 0.68rem; }
+.opened, .positive { color: var(--teal); }
+.closed, .negative { color: var(--coral); }
+.not-applicable { color: var(--muted); }
+.active-count { font-weight: 500; }
+
+.details-section { margin-top: 72px; }
+.details-list { display: grid; gap: 10px; }
+.year-details { background: var(--white); border: 1px solid var(--line); border-radius: 4px; }
+.year-details summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 24px; cursor: pointer; list-style: none; }
+.year-details summary::-webkit-details-marker { display: none; }
+.year-details summary::after { content: "+"; color: var(--teal); font-size: 1.2rem; }
+.year-details[open] summary::after { content: "-"; }
+.year-details summary strong { font-weight: 500; }
+.year-details summary > span { color: var(--muted); font-size: 0.82rem; }
+.summary-divider { margin: 0 8px; color: var(--line); }
+.school-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 0 24px 24px; }
+.school-list { min-width: 0; }
+.school-list h3 { margin: 0 0 10px; font-size: 0.85rem; font-weight: 700; }
+.school-list ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.school-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 0.84rem; }
+.school-list li strong { font-weight: 500; }
+.school-list li span { flex: 0 0 auto; color: var(--muted); font-size: 0.74rem; }
+.school-list li > div { display: grid; gap: 3px; }
+.school-list li .successor { color: var(--teal); }
+.empty-list { color: var(--muted); font-size: 0.82rem; }
+
+footer { margin-top: 28px; color: var(--muted); font-size: 0.72rem; }
+
+@media (max-width: 700px) {
+	.page-shell { padding: 40px 18px 28px; }
+	.section-heading { display: block; }
+	.note { margin-top: 12px; }
+	th, td { padding: 16px 14px; }
+	.year-details summary { padding: 17px 16px; }
+	.year-details summary > span { flex: 1; text-align: right; }
+	.school-columns { grid-template-columns: 1fr; gap: 24px; padding: 0 16px 18px; }
+}

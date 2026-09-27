@@ -1,0 +1,6 @@
+{
+	"editor.defaultFormatter": "biomejs.biome",
+	"files.autoSave": "afterDelay",
+	"files.trimTrailingWhitespace": true,
+	"editor.renderWhitespace": "trailing"
+}
