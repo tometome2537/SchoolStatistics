@@ -1,17 +1,20 @@
-export type SchoolTypeJa =
-	| "幼稚園"
-	| "幼保連携型認定こども園"
-	| "小学校"
-	| "中学校"
-	| "義務教育学校"
-	| "高等学校"
-	| "中等教育学校"
-	| "特別支援学校"
-	| "大学"
-	| "短期大学"
-	| "高等専門学校"
-	| "専修学校"
-	| "各種学校";
+export const SCHOOL_TYPES_JA = [
+	"幼稚園",
+	"幼保連携型認定こども園",
+	"小学校",
+	"中学校",
+	"義務教育学校",
+	"特別支援学校",
+	"高等学校",
+	"中等教育学校",
+	"大学",
+	"短期大学",
+	"高等専門学校",
+	"専修学校",
+	"各種学校",
+] as const;
+
+export type SchoolTypeJa = (typeof SCHOOL_TYPES_JA)[number];
 
 export type SchoolTypeEn =
 	| "Kindergarten"

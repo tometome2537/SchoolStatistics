@@ -19,6 +19,7 @@ const configs = [
 			"20260825-mxt_chousa01-000011635_2-1.csv",
 			"20260825-mxt_chousa01-000011635_2-2.csv",
 			"20260825-mxt_chousa01-000011635_4.csv",
+			"20260825-mxt_chousa01-000011635_6.csv",
 		],
 	},
 ];
@@ -116,15 +117,15 @@ async function importSchoolCode(targetYear: number, fileNames: string[]) {
 		);
 
 		for (const item of schoolCodeCsvObj) {
-			if (
-				!(
-					item.学校種 === "特別支援学校" ||
-					item.学校種 === "小学校" ||
-					item.学校種 === "中学校" ||
-					item.学校種 === "義務教育学校"
-				)
-			)
-				continue;
+			// if (
+			// 	!(
+			// 		item.学校種 === "特別支援学校" ||
+			// 		item.学校種 === "小学校" ||
+			// 		item.学校種 === "中学校" ||
+			// 		item.学校種 === "義務教育学校"
+			// 	)
+			// )
+			// 	continue;
 
 			const SpecialNeedsSchool: OutputJson = {
 				id: item.学校コード,
